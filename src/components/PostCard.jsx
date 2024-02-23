@@ -8,6 +8,7 @@ function PostCard({ id, title, description, body, imageUrl, likes = 0 }) {
     setLikes(updateLikes);
     likes = updateLikes;
   };
+
   return (
     <div className="mb-3">
       <div className="card">
@@ -18,10 +19,13 @@ function PostCard({ id, title, description, body, imageUrl, likes = 0 }) {
             {description}
           </h6>
           <p className="card-text">{body}</p>
-          <div className="">
+          <div className="d-flex justify-content-between">
             <p style={{ cursor: "pointer" }} onClick={updateLikes}>
               likes &#x2022; {likesState}
             </p>
+            <button type="button" class="btn btn-danger ml-5">
+              Delete
+            </button>
           </div>
         </div>
       </div>

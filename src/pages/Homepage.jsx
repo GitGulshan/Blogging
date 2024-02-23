@@ -1,6 +1,9 @@
+import { useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
+import Axios from "axios";
 
 function Homepage() {
+  const [articles, setArticles] = useState([]);
   const posts = [
     {
       id: 1,
@@ -53,11 +56,28 @@ function Homepage() {
       url: "https://www.google.com/search?q=loki&tbm=isch&ved=2ahUKEwjoj_nkqb-EAxVenWMGHWW8AuQQ2-cCegQIABAA&oq=loki&gs_lp=EgNpbWciBGxva2kyDRAAGIAEGIoFGEMYsQMyChAAGIAEGIoFGEMyChAAGIAEGIoFGEMyChAAGIAEGIoFGEMyDRAAGIAEGIoFGEMYsQMyChAAGIAEGIoFGEMyChAAGIAEGIoFGEMyChAAGIAEGIoFGEMyChAAGIAEGIoFGEMyChAAGIAEGIoFGENIwhdQ6QRYwhVwAXgAkAEDmAGfAaAB6guqAQM0Ljm4AQPIAQD4AQGKAgtnd3Mtd2l6LWltZ6gCCsICBBAjGCfCAgUQABiABMICBxAjGOoCGCfCAgsQABiABBixAxiDAcICCBAAGIAEGLEDiAYB&sclient=img&ei=x3DXZaiQF966juMP5fiKoA4&bih=1303&biw=1712#imgrc=SwPtTlpcOzfGJM",
     },
   ];
+
+  const getArticles = async () => {
+    //without api call
+    // setArticles([...articles, ...posts]);
+
+    //with api call
+    try {
+      const res = await Axios.get("http://localhost:8080/getPosts");
+
+      setArticles([...articles, ...res.data]);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  useEffect(() => {
+    getArticles();
+  }, []);
   return (
     <div className="w-100 row">
       <div className="col-md-3"></div>
       <div className=" my-5 col-md-6">
-        {posts.map((item) => (
+        {articles.map((item) => (
           <PostCard
             title={item.title}
             description={item.description}
