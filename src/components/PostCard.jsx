@@ -1,6 +1,14 @@
 import { useState } from "react";
 
-function PostCard({ id, title, description, body, imageUrl, likes = 0 }) {
+function PostCard({
+  id,
+  title,
+  description,
+  body,
+  imageUrl,
+  likes = 0,
+  deleteFunc,
+}) {
   const [likesState, setLikes] = useState(likes);
 
   const updateLikes = () => {
@@ -23,7 +31,11 @@ function PostCard({ id, title, description, body, imageUrl, likes = 0 }) {
             <p style={{ cursor: "pointer" }} onClick={updateLikes}>
               likes &#x2022; {likesState}
             </p>
-            <button type="button" class="btn btn-danger ml-5">
+            <button
+              type="button"
+              class="btn btn-danger ml-5"
+              onClick={() => deleteFunc(id)}
+            >
               Delete
             </button>
           </div>
